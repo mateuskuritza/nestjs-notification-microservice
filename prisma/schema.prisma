@@ -1,0 +1,23 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+model Notification {
+    id          String    @id
+    recipientId String
+    content     String
+    category    String
+    readAt      DateTime?
+    createdAt   DateTime  @default(now())
+
+    @@index([recipientId]) // this must be a unique ID on a table in another backend service 
+}
+
+// É importante que nome seja recipientId ao invés de userId, userId poderia ser algo muito especifico 
+// de algum serviço enquanto que para o NotificationService isso não é importante
+// É importante indexar o recipientId por questões de performance
