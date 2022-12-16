@@ -1,5 +1,4 @@
-import { Content } from '@app/entities/content';
-import { Notification } from '@app/entities/notification';
+import makeNotification from '@test/factories/notification-factory';
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
 import { randomUUID } from 'crypto';
 import { CancelNotification } from './cancel-notification';
@@ -12,12 +11,7 @@ describe('Cancel Notification', () => {
   );
 
   it('should be able to cancel a notification', async () => {
-    const notification = new Notification({
-      category: 'social',
-      content: new Content('Nova notificação'),
-      recipientId: randomUUID(),
-    });
-
+    const notification = makeNotification();
     await inMemoryNotificationsRepository.create(notification);
 
     await cancelNotification.execute({
