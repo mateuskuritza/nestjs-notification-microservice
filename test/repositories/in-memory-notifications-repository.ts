@@ -6,7 +6,21 @@ export class InMemoryNotificationsRepository
 {
   readonly notifications: Notification[] = [];
 
+  async findById(notificationId: string): Promise<Notification | null> {
+    return this.notifications.find(({ id }) => id === notificationId) || null;
+  }
+
   async create(notification: Notification): Promise<void> {
     this.notifications.push(notification);
+  }
+
+  async save(notification: Notification): Promise<void> {
+    const notificationIndex = this.notifications.findIndex(
+      ({ id }) => id === notification.id,
+    );
+
+    if (notificationIndex >= 0) {
+      this.notifications[notificationIndex] = notification;
+    }
   }
 }

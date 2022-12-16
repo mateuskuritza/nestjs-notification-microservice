@@ -12,7 +12,8 @@ model Notification {
     recipientId String
     content     String
     category    String
-    readAt      DateTime?
+    readAt      DateTime? // Ao invés de guardar um boolean isso é interessante pq da duas informações, se foi cancelado e quando
+    canceledAt  DateTime?
     createdAt   DateTime  @default(now())
 
     @@index([recipientId]) // this must be a unique ID on a table in another backend service 
